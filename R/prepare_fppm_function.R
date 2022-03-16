@@ -45,10 +45,9 @@ prepare_fppm <- function(model, assumption) {
   
   stringcode <- "model {
                     for (i in 1:dpoints) {
-                      timen1[i] <- equals(P1, 0)*log(time[i]) + (1 - equals(P1, 0))*pow(time[i], P1)
-                      timen2[i] <- (1 - equals(P2, P1))*(equals(P2, 0)*log(time[i]) + 
-                      (1 - equals(P2, 0))*pow(time[i], P2)) + equals(P2, P1)*equals(P2, 0)*log(time[i])*log(time[i]) + 
-                      (1 - equals(P2, 0))*pow(time[i], P2)*log(time[i])
+                      timen1[i] <- equals(P1, 0)*log(time[i]) + (1 - equals(P1, 0))*pow(time[i], P1) 										
+                      timen2[i] <- (1 - equals(P2, P1))*(equals(P2, 0)*log(time[i]) + (1 - equals(P2, 0))*pow(time[i], P2)) + 
+                      equals(P2, P1)*equals(P2, 0)*log(time[i])*log(time[i]) + (1 - equals(P2, 0))*pow(time[i], P2)*log(time[i])
                       r[i] ~ dbin(p_o[i], c[i])
                       q[i] <- q0[i]*I[i]
                       m[i] ~ dbin(q0[i], n[i]) 
