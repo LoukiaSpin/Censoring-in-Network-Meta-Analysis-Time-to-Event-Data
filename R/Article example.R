@@ -10,7 +10,7 @@
 
 
 
-### Install necessary libraries ----
+## Install necessary libraries ----
 list.of.packages <- c("R2jags", "coda", "dplyr", "mcmcplots", "ggplot2", "ggrepel", "ggpubr")
 lapply(list.of.packages, require, character.only = TRUE); rm(list.of.packages) 
 
