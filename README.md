@@ -1,6 +1,4 @@
 
-`{r setup, include=FALSE} knitr::opts_chunk$set(echo = TRUE)`
-
 ------------------------------------------------------------------------
 
 # Censoring-in-Network-Meta-Analysis-Time-to-Event-Data
