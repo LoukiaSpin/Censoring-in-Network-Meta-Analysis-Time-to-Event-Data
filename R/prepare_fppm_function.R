@@ -45,10 +45,9 @@ prepare_fppm <- function(model, assumption) {
   
   stringcode <- "model {
                     for (i in 1:dpoints) {
-                      timen1[i] <- equals(P1, 0)*log(time[i]) + (1 - equals(P1, 0))*pow(time[i], P1)
-                      timen2[i] <- (1 - equals(P2, P1))*(equals(P2, 0)*log(time[i]) + 
-                      (1 - equals(P2, 0))*pow(time[i], P2)) + equals(P2, P1)*equals(P2, 0)*log(time[i])*log(time[i]) + 
-                      (1 - equals(P2, 0))*pow(time[i], P2)*log(time[i])
+                      timen1[i] <- equals(P1, 0)*log(time[i]) + (1 - equals(P1, 0))*pow(time[i], P1) 										
+                      timen2[i] <- (1 - equals(P2, P1))*(equals(P2, 0)*log(time[i]) + (1 - equals(P2, 0))*pow(time[i], P2)) + 
+                      equals(P2, P1)*equals(P2, 0)*log(time[i])*log(time[i]) + (1 - equals(P2, 0))*pow(time[i], P2)*log(time[i])
                       r[i] ~ dbin(p_o[i], c[i])
                       q[i] <- q0[i]*I[i]
                       m[i] ~ dbin(q0[i], n[i]) 
@@ -159,9 +158,10 @@ prepare_fppm <- function(model, assumption) {
                                      SUCRA3[t] <- sum(cumeffectiveness3[t, 1:(nt - 1)])/(nt - 1)
                                    }
                                    for (m in 1:maxt) {
-                                     time1[m] <- equals(P1, 0)*log(m) + (1 - equals(P1, 0))*pow(m, P1)
-                                     time2[m] <- (1 - equals(P2, P1))*(equals(P2, 0)*log(m) + (1 - equals(P2, 0))*pow(m, P2)) + 
-                                     equals(P2, P1)*equals(P2, 0)*log(m)*log(m) + (1 - equals(P2, 0))*pow(m, P2)*log(m)
+                                     time1[m] <- equals(P1,0)*log(m) + (1-equals(P1,0))*pow(m,P1)
+                                     time2[m] <- ((1 - equals(P2, P1))*(equals(P2, 0)*log(m) + 
+                                     (1 - equals(P2, 0))*pow(m, P2)) + equals(P2, P1)*(equals(P2, 0)*log(m)*log(m) + 
+                                     (1 - equals(P2, 0))*pow(m, P2)*log(m)))
                                    }
                                    for (k in 1:(nt - 1)) {
                                      for (c in (k + 1):nt) {
@@ -178,12 +178,13 @@ prepare_fppm <- function(model, assumption) {
                                    }
                                    for (n in 1:nt) {
                                      for (m in 1:maxt) {
-                                       log(hazard[n, m]) <- beta[n, 1] + (beta[n, 2]*time1[m]) + (beta[n, 2]*time2[m])
+                                       log(hazard[n, m]) <- beta[n, 1] + (beta[n, 2]*time1[m]) + (beta[n, 3]*time2[m])
                                        cum_h[n, m] <- sum(hazard[n, 1:m])
                                        T[n, m] <- 1 - exp(-cum_h[n, m])
                                        Surv[n, m] <- 1 - T[n, m]
                                      }
-                                     expect_Surv[n] <- sum(Surv[n, 1:maxt])  # Median survival time
+                                     #expect_Surv[n] <- maxt - sum(Surv[n, 1:(maxt - 1)])  # Expected survival time
+                                     expect_Surv[n] <- sum(Surv[n, 1:(maxt - 1)])
                                    }\n")
   
   stringcode <- if (assumption == "IDE-COMMON") {
