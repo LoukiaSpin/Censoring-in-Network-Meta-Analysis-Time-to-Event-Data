@@ -14,7 +14,8 @@
 list.of.packages <- c("R2jags", "coda", "dplyr", "mcmcplots", "ggplot2", "ggrepel", "ggpubr")
 lapply(list.of.packages, require, character.only = TRUE); rm(list.of.packages) 
 
-
+options(mc.cores = parallel::detectCores())
+set.seed(12345)
 
 ## Load functions ----
 source("./R/data_preparation_function.R")
@@ -50,8 +51,8 @@ res <- model_fppm(data_points = MTCData[, -2],
                   P2 = 1, 
                   D = 1,   # D = 1, beneficial outcome; D = 0, harmful outcome
                   n_chains = 2, 
-                  n_iter = 8000, 
-                  n_burnin = 2000, 
+                  n_iter = 80000, 
+                  n_burnin = 20000, 
                   n_thin = 4)
 
 # Run FP-PM NMA (Independent, uncorrelated) ----
@@ -65,8 +66,8 @@ res_pm <- model_fppm(MTCData,
                      P2 = 1, 
                      D = 1,   # D = 1, beneficial outcome; D = 0, harmful outcome
                      n_chains = 2, 
-                     n_iter = 8000, 
-                     n_burnin = 2000, 
+                     n_iter = 80000, 
+                     n_burnin = 20000, 
                      n_thin = 4)
 
 
