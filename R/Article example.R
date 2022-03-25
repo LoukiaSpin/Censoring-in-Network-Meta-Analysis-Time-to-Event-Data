@@ -1,9 +1,9 @@
 #*******************************************************************************
 #*                                                                                                              
 #*                                                                                                              
-#*  NMA of Survival Data with Fractional Polynomials to Censored participants              
+#*  NMA of Survival Data with Fractional Polynomials and Censored participants              
 #*            <Second order fractional polynomial (PMID: 21548941)>                                                                
-#*                        (MISSING-AT-RANDOM ASSUMPTION)                                              
+#*                        (Censored at random assumption)                                              
 #*                                                                                                              
 #*                                                                                                                                    
 #*******************************************************************************
