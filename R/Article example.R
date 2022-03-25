@@ -14,8 +14,13 @@
 list.of.packages <- c("R2jags", "coda", "dplyr", "mcmcplots", "ggplot2", "ggrepel", "ggpubr")
 lapply(list.of.packages, require, character.only = TRUE); rm(list.of.packages) 
 
+
+
+## Set seed ----
 options(mc.cores = parallel::detectCores())
 set.seed(12345)
+
+
 
 ## Load functions ----
 source("./R/data_preparation_function.R")
@@ -36,9 +41,12 @@ MTCData <- read.table("./data/Data1.txt", header = TRUE)
 # Dataset - Trial information ----
 MTCAddData <- read.table("./data/Add_Data.txt", header = TRUE)
 
+# intervention names
+drug_names <- c("Docetaxel", "Best Supportive Care", "Pemetrexed", "Gefitinib")
 
 
-# Run random-effects FP NMA (exclusion of MOD) ----
+
+## Run random-effects FP NMA (excluding missing participants) ----
 res <- model_fppm(data_points = MTCData[, -2], 
                   data_trial = MTCAddData,
                   max_time = 60, 
@@ -49,13 +57,15 @@ res <- model_fppm(data_points = MTCData[, -2],
                   var_misspar = 1,
                   P1 = -2, 
                   P2 = 1, 
-                  D = 1,   # D = 1, beneficial outcome; D = 0, harmful outcome
+                  D = 1,   
                   n_chains = 2, 
                   n_iter = 80000, 
                   n_burnin = 20000, 
                   n_thin = 4)
 
-# Run random-effects FP-PM NMA (Independent, uncorrelated) ----
+
+
+## Run random-effects FP-PM NMA (Independent, uncorrelated IMHR parameter) ----
 res_pm <- model_fppm(MTCData, 
                      MTCAddData, 
                      max_time = 60,
@@ -64,7 +74,7 @@ res_pm <- model_fppm(MTCData,
                      heter_prior = list("halfnormal", 0, 1),
                      P1 = -2, 
                      P2 = 1, 
-                     D = 1,   # D = 1, beneficial outcome; D = 0, harmful outcome
+                     D = 1,   
                      n_chains = 2, 
                      n_iter = 80000, 
                      n_burnin = 20000, 
@@ -72,11 +82,16 @@ res_pm <- model_fppm(MTCData,
 
 
 
-# Obtain results ----
-drug_names <- c("Docetaxel", "Best Supportive Care", "Pemetrexed", "Gefitinib")
-fig <- fppm_plot(full = res,
-                 control = "Docetaxel",
-                 drug_names = drug_names,
-                 time_title = "Time (months)"); fig
+## Obtain results ----
+# FP NMA after excluding missing participants
+fppm_plot(full = res,
+          control = "Docetaxel",
+          drug_names = drug_names,
+          time_title = "Time (months)")
 
+# PM-FP-PM NMA (Independent, uncorrelated IMHR parameter)
+fppm_plot(full = res_pm,
+          control = "Docetaxel",
+          drug_names = drug_names,
+          time_title = "Time (months)")
 
