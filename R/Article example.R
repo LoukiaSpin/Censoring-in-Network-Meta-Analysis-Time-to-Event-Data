@@ -36,8 +36,8 @@ MTCData <- read.table("./data/Data1.txt", header = TRUE)
 MTCAddData <- read.table("./data/Add_Data.txt", header = TRUE)
 
 
-## Run random-effects NMA 
-# Run FP NMA (exclusion of MOD) ----
+
+# Run random-effects FP NMA (exclusion of MOD) ----
 res <- model_fppm(data_points = MTCData[, -2], 
                   data_trial = MTCAddData,
                   max_time = 60, 
@@ -54,7 +54,7 @@ res <- model_fppm(data_points = MTCData[, -2],
                   n_burnin = 2000, 
                   n_thin = 4)
 
-# Run FP-PM NMA (Independent, uncorrelated) ----
+# Run random-effects FP-PM NMA (Independent, uncorrelated) ----
 res_pm <- model_fppm(MTCData, 
                      MTCAddData, 
                      max_time = 60,
