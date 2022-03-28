@@ -43,7 +43,7 @@ __n__, the number of participants randomised in each timepoint and arm of each s
 __a__, the investigated arm (for a two-arm study, the maximum __a__ is two, for a three-arm study, the maximum __a__ is three, and so on);
 __dt__, the length of the interval;
 __s__, the study identifier;
-__c__, the number of completers in each timepoint and arm of each study;
+__c__, the number of completers in each timepoint and arm of each study.
 
 * measure: A character string indicating the effect measure with values `OR`, `MD`, `SMD`, or `ROM` for the odds ratio, mean difference, standardised mean difference and ratio of means, respectively.
 
