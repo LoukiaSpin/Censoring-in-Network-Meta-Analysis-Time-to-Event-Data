@@ -20,4 +20,9 @@ The repository offers the typical structure of separate folders for data, and R 
 
 The next sections briefly illustrate the functions of this repository.
 
+## Output 
+
+Prerequisite R packages: [R2jags](https://CRAN.R-project.org/package=R2jags), [code](https://cran.r-project.org/web/packages/coda/index.html),
+[mcmcplots](https://cran.r-project.org/web/packages/mcmcplots/index.html), [dplyr](https://CRAN.R-project.org/package=dplyr), [ggplot2](https://cran.r-project.org/web/packages/ggplot2/index.html), [ggrepel](https://cran.r-project.org/web/packages/ggrepel/index.html), and [ggpubr](https://cran.r-project.org/web/packages/ggpubr/index.html)
+
 
