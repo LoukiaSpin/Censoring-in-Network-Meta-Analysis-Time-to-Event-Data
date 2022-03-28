@@ -14,7 +14,7 @@ In the case of aggregate data, statistical modeling of MOD has received consider
 
 The repository offers the typical structure of separate folders for data, and R (code/scripts), respectively.
 * The _data_ folder includes two text files: __Add_Data.txt__ contains the dataset in the arm-level, timepoint wide format, and __Data1.txt__ includes the interventions for each arm of every trial;
-* The _R_ folder includes eight function scripts and one script to run the example using the functions of the repository and replicate the analyses of the article.<br>
+* The _R_ folder includes eight function scripts and one script to run the example (__Article example.R__) using the functions of the repository and replicate the analyses of the article.<br>
 
 [JAGS](http://mcmc-jags.sourceforge.net/) must be installed to employ the [R2jags](https://github.com/suyusung/R2jags/issues/) package. After downloading/cloning the repo, the user can use the .Rproj file to source all code.
 
