@@ -11,7 +11,7 @@
 
 
 ## Install necessary libraries ----
-list.of.packages <- c("R2jags", "coda", "dplyr", "mcmcplots", "ggplot2", "ggrepel", "ggpubr")
+list.of.packages <- c("R2jags", "coda", "dplyr", "mcmcplots", "ggplot2", "ggrepel", "ggpubr", "ggsci")
 lapply(list.of.packages, require, character.only = TRUE); rm(list.of.packages) 
 
 options(mc.cores = parallel::detectCores())

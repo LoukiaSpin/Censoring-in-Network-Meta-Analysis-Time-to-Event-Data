@@ -78,12 +78,13 @@ plot_hr_surv <- function (full,
   # Create the plot
   if (type == "HR") {
     ggplot(df1_sub, aes(x = as.numeric(time))) + 
-      stat_smooth(aes(y = exp(as.numeric(median)), colour = exper_new), formula = y ~ s(x, k = time_max), method = "gam", se = FALSE) + 
-      stat_smooth(aes(y = exp(as.numeric(lower)), colour = exper_new), formula = y ~ s(x, k = time_max), method = "gam", se = FALSE, linetype = "twodash") +
-      stat_smooth(aes(y = exp(as.numeric(upper)), colour = exper_new), formula = y ~ s(x, k = time_max), method = "gam", se = FALSE, linetype = "twodash") +
+      stat_smooth(aes(y = exp(as.numeric(median)), colour = exper_new), formula = y ~ s(x, k = time_max-10), method = "gam", se = FALSE) + 
+      stat_smooth(aes(y = exp(as.numeric(lower)), colour = exper_new), formula = y ~ s(x, k = time_max-10), method = "gam", se = FALSE, linetype = "twodash") +
+      stat_smooth(aes(y = exp(as.numeric(upper)), colour = exper_new), formula = y ~ s(x, k = time_max-10), method = "gam", se = FALSE, linetype = "twodash") +
       labs(x = time_title, y = "Hazard Ratio") +
-      scale_color_brewer(palette = "Set1") +
-      theme_bw() +  
+      theme_minimal() +
+      scale_color_nejm() +
+      ylim(0, 4) +
       theme(legend.title = element_blank(), legend.position = "bottom")
   } else {
     ggplot(surv_data, aes(x = as.numeric(time))) + 
@@ -91,8 +92,8 @@ plot_hr_surv <- function (full,
       stat_smooth(aes(y = as.numeric(lower), colour = treat), formula = y ~ s(x, k = time_max), method = "gam", se = FALSE, linetype = "twodash") +
       stat_smooth(aes(y = as.numeric(upper), colour = treat), formula = y ~ s(x, k = time_max), method = "gam", se = FALSE, linetype = "twodash") +
       labs(x = time_title, y = "Overall Survival") +
-      scale_color_brewer(palette = "Set1") +
-      theme_bw() +  
+      theme_minimal() +
+      scale_color_nejm() + 
       theme(legend.title = element_blank(), legend.position = "bottom")
     
   }
