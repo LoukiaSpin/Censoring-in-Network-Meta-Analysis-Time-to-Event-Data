@@ -157,6 +157,6 @@ fppm_plot(full,
 ```r
 fppm_plot(full = res,
           control = "Docetaxel",
-          drug_names = drug_names,
+          drug_names = interv_names,
           time_title = "Time in months")
 ```
