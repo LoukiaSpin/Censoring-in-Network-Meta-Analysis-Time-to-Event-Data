@@ -63,6 +63,8 @@ model_fppm(data_points,
 
 For details about the arguments, read the __documentation__ of the function.
 
+The model runs in `JAGS` and the progress of the simulation appears on the R console. The output of `model_fppm()` is used as an S3 object by the functions `plot_hr_surv()`, `leverage_plot()`, and `fppm_plot()` to be processed further and provide an end-user-ready output.
+
 #### Using the example 
 
 ```r
@@ -81,9 +83,9 @@ res <- model_fppm(data_points = MTCData,
                   n_thin = 4)
 ```
 
-### Plot the Hazard Ratio and Survival Probability for a specific comparator intervention
+### Plot the Hazard Ratio and Survival Probability 
 
-To plot the posterior median and 95% credible intervals of the hazard ratio over time for comparisons with the selected intervention of the network, use the function `plot_hr_surv()` which has the following syntax: 
+To plot the hazard ratio over time for comparisons with the selected intervention of the network as well as the survival probability for all interventions at once, use the function `plot_hr_surv()` which has the following syntax: 
 
 ```r
 plot_hr_surv(full, 
@@ -95,7 +97,7 @@ plot_hr_surv(full,
 #### Explaining the arguments
 
 * full: An object of S3 class `model_fppm()`. See 'Value' in function `model_fppm()`.
-* type: Character string indicating the plot with values `"HR"` for the hazard ratio plot and `"Surv"` for the survival probability. If `type` is not defined, the function `plot_hr_surv()` returns both plots.
+* type: Character string indicating the plot with values `"HR"` for the hazard ratio plot and `"Surv"` for the survival probability. 
 * drug_names: A vector of labels with the name of the interventions in the order they appear in the argument `data_trial` of `model_fppm()`.
 * control: A character to indicate the comparator intervention. It must be any name found in `drug_names`.
 * time_title: A title to indicate the time measure (e.g., days, weeks, months, and so on).
@@ -106,8 +108,55 @@ plot_hr_surv(full,
 # The names of the interventions in the order they appear in the dataset
 interv_names <- c("Docetaxel", "Best Supportive Care", "Pemetrexed", "Gefitinib")
 
+plot_hr_surv(full = res,
+             type = "HR",
+             drug_names = interv_names,
+             control = "Docetaxel",
+             time_title = "Time in months")
+```
+### The leverage plot
+
+To plots the leverage against the square root of the posterior mean of residual deviance of the trial-arms under the model of interest, we have developed the function `leverage_plot()` which has the following syntax: 
+
+```r
+leverage_plot(full, title) 
+```
+#### Explaining the arguments
+
+* full: An object of S3 class `model_fppm()`. See 'Value' in function `model_fppm()`.
+* title: A title to indicate the model (e.g., fractional polynomial with pattern-mixture model, or fractional polynomial with excluded missing participants).
+
+#### Using the example
+
+```r
+leverage_plot(full = res,
+              time = "Fractional polynomial with pattern-mixture model")
+```
+
+### End-user-ready results 
+
+To plot all results (hazard ratio, survival probability, leverage plot and tabulated estimates) at once, use the function `fppm_plot()` which has the following syntax: 
+
+```r
+fppm_plot(full, 
+          drug_names, 
+          control, 
+          time_title,
+          save_xls)
+```
+#### Explaining the arguments 
+
+* full: An object of S3 class `model_fppm()`. See 'Value' in function `model_fppm()`.
+* drug_names: A vector of labels with the name of the interventions in the order they appear in the argument `data_trial` of `model_fppm()`.
+* control: A character to indicate the comparator intervention. It must be any name found in `drug_names`.
+* time_title: A title to indicate the time measure (e.g., days, weeks, months, and so on).
+* save_xls: Logical to indicate whether to export the tabulated results to an _xlsx_ file (via the `write_xlsx()` function of the R-package [writexl](https://CRAN.R-project.org/package=writexl) to the working directory of the user. The default is `FALSE` (do not export).
+
+#### Using the example
+
+```r
 fppm_plot(full = res,
           control = "Docetaxel",
-          drug_names = interv_names,
+          drug_names = drug_names,
           time_title = "Time in months")
 ```
