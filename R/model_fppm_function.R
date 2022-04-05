@@ -10,6 +10,8 @@
 #' @param data_trial A data-frame of the one-trial-per-row format with arm-level
 #'   data interventions studied in each arm of every trial.
 #'   In essence, an intervention identifier in each arm.
+#' @param max_time A positive non-zero number for the maximum timepoint of 
+#'   interest 
 #' @param model Character string indicating the analysis model with values
 #'   \code{"RE"}, or \code{"FE"} for the random-effects and fixed-effect model,
 #'   respectively. The default argument is \code{"RE"}.
@@ -20,7 +22,7 @@
 #'   \code{"IDE-TRIAL"}, \code{"IDE-ARM"}, or \code{"IND-UNCORR"}.
 #'   The default argument is \code{"IDE-ARM"}. The abbreviations \code{"IDE"},
 #'   \code{"HIE"}, and \code{"IND"} stand for identical, hierarchical and
-#'   independent, respectively. and \code{"UNCORR"} stands for uncorrelated.
+#'   independent, respectively, and \code{"UNCORR"} stands for uncorrelated.
 #' @param heter_prior A list of three elements with the following order:
 #'   1) a character string indicating the distribution with
 #'   (currently available) values \code{"halfnormal"}, or \code{"uniform"}; 
@@ -33,14 +35,11 @@
 #' @param mean_misspar A numeric value or a vector of two numeric values for the
 #'   mean of the normal distribution of the informative missingness hazard ratio 
 #'   parameter in the logarithmic scale (see 'Details'). The default argument is
-#'   0 and corresponds to the missing-at-random assumption.
+#'   0 and corresponds to the censored-at-random assumption.
 #'   See also 'Details' in \code{\link{missingness_param_prior}}.
 #' @param var_misspar A positive non-zero number for the variance of the
 #'   normal distribution of the informative missingness hazard ratio parameter 
-#'   in the logarithmic scale.
-#'   When the \code{measure} is \code{"OR"}, \code{"MD"}, or \code{"SMD"}
-#'   the default argument is 1. When the \code{measure} is \code{"ROM"}
-#'   the default argument is 0.04.
+#'   in the logarithmic scale. The default argument is 1. 
 #' @param P1 A scalar chosen from a set within {-2, -1, -0.5, 0, 0.5, 1, 2, 3} 
 #'   for the power transformation of the time variable in the first-order 
 #'   fractional polynomial model (Jansen, 2011; Royston and Altman, 1994).
