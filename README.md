@@ -3,9 +3,7 @@
 
 ## Introduction
 
-Jansen [[1]](https://doi.org/10.1186/1471-2288-11-61) proposed the use of the family of fractional polynomial (FP) models which offers a multidimensional treatment effect approach to conduct a network meta-analysis of time-to-event data that does not rely on distributional assumptions. The FP approach relies on aggregate data from digitized survival curves divided into multiple consecutive time intervals over the follow-up period. The observed number of event times in each interval is then modeled as a function of the number of participants alive at time, assuming censoring occurs before the deaths in the consecutive follow-up intervals. Censoring can be considered a form of the missing outcome data (MOD) problem, assuming that participants are censored at random (CAR). CAR assumes that the outcome is similarly distributed among those leaving and those remaining in the study over time, conditional on fully observed covariates.
-
-In the case of aggregate data, statistical modeling of MOD has received considerable attention in the last years for binary and continuous outcomes,creating an elegant framework that acknowledges the uncertainty about the assumed missingness scenarios. [[2]](https://doi.org/10.1016/j.jclinepi.2018.09.002) [[3]](https://doi.org10.1002/sim.6365) This can be achieved under a model that reflects the distribution of the outcome in completers and missing participants, known as the pattern-mixture (PM) model.[[4]](https://doi.org/10.2307/2290705) Modeling MOD via the PM model offers a thorough investigation of the underlying missingness mechanisms across different studies and interventions. The PM model incorporates an informative missingness parameter that reflects belief(s) about the missingness mechanism for each arm of every study.
+Jansen [[1]](https://doi.org/10.1186/1471-2288-11-61) proposed the use of the family of fractional polynomial (FP) models which offers a multidimensional treatment effect approach to conduct a network meta-analysis (NMA) of time-to-event data that does not rely on distributional assumptions. The FP approach is the most commonly used flexible survival models in the NMA framework and relies on aggregate data from digitized survival curves divided into multiple consecutive time intervals over the follow-up period. Survival data is often censored, meaning that extrapolation techniques must be used to obtain estimates of the full survival benefit. In the presence of censored participants, estimates of the survival benefit are restricted to those observed directly in the relevant clinical studies, distorting the actual survival gain. To properly address censoring in aggregate time-to-event data when access to individual patient data is not granted to allow for more sophisticated analyses, we have extended the FP modeling framework of Jansen [[1]](https://doi.org/10.1186/1471-2288-11-61) for NMA to allow for the joint synthesis of observed and censored time-to-event data via the pattern-mixture model.
 
 ## Description of the repository
 
@@ -116,7 +114,7 @@ plot_hr_surv(full = res,
 ```
 ### The leverage plot
 
-To plots the leverage against the square root of the posterior mean of residual deviance of the trial-arms under the model of interest, we have developed the function `leverage_plot()` which has the following syntax: 
+To plot the leverage against the square root of the posterior mean of residual deviance of the trial-arms under the fractional polynomial model (with or without the pattern-mixture model), we have developed the function `leverage_plot()` which has the following syntax: 
 
 ```r
 leverage_plot(full, title) 
@@ -124,7 +122,7 @@ leverage_plot(full, title)
 #### Explaining the arguments
 
 * full: An object of S3 class `model_fppm()`. See 'Value' in function `model_fppm()`.
-* title: A title to indicate the model (e.g., fractional polynomial with pattern-mixture model, or fractional polynomial with excluded missing participants).
+* title: A title to indicate the model (e.g., fractional polynomial with pattern-mixture model, or fractional polynomial with excluded censored participants).
 
 #### Using the example
 
@@ -150,7 +148,7 @@ fppm_plot(full,
 * drug_names: A vector of labels with the name of the interventions in the order they appear in the argument `data_trial` of `model_fppm()`.
 * control: A character to indicate the comparator intervention. It must be any name found in `drug_names`.
 * time_title: A title to indicate the time measure (e.g., days, weeks, months, and so on).
-* save_xls: Logical to indicate whether to export the tabulated results to an _xlsx_ file (via the `write_xlsx()` function of the R-package [writexl](https://CRAN.R-project.org/package=writexl) to the working directory of the user. The default is `FALSE` (do not export).
+* save_xls: Logical to indicate whether to export the tabulated results to an _xlsx_ file (via the `write_xlsx()` function of the R-package [writexl](https://CRAN.R-project.org/package=writexl)) to the working directory of the user. The default is `FALSE` (do not export).
 
 #### Using the example
 
